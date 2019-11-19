@@ -29,14 +29,11 @@ import org.eclipse.microprofile.starter.core.artifacts.Creator;
 import org.eclipse.microprofile.starter.core.files.FilesLocator;
 import org.eclipse.microprofile.starter.core.model.*;
 import org.eclipse.microprofile.starter.core.validation.PackageNameValidator;
-import org.eclipse.microprofile.starter.log.LoggingTask;
 import org.eclipse.microprofile.starter.rest.model.MPOptionsAvailable;
 import org.eclipse.microprofile.starter.rest.model.Project;
 import org.eclipse.microprofile.starter.view.EngineData;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.EntityTag;
@@ -129,9 +126,6 @@ public class APIService {
 
     @Inject
     private ZipFileCreator zipFileCreator;
-
-    @Resource
-    private ManagedExecutorService managedExecutorService;
 
     public Response readme(String ifNoneMatch) {
         if (ifNoneMatch != null) {
@@ -320,8 +314,6 @@ public class APIService {
 
         EngineData ed = getEngineData(project);
 
-        managedExecutorService.submit(new LoggingTask(ed));
-
         EntityTag etag = new EntityTag(Integer.toHexString(31 * version.getGit().hashCode() + project.hashCode()));
 
         if (ifNoneMatch != null) {
@@ -347,9 +339,6 @@ public class APIService {
 
         model.setSpecification(specifications);
         model.getAddons().addAll(ed.getSelectedFeatures());
-
-        model.getOptions().put(BeansXMLMode.OptionName.NAME,
-                new OptionValue(BeansXMLMode.getValue(ed.getBeansxmlMode()).getMode()));
 
         modelManager.prepareModel(model, false);
         creator.createArtifacts(model);

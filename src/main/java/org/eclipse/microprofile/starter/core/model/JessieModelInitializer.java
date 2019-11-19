@@ -36,18 +36,12 @@ public class JessieModelInitializer {
 
     public void defineDefaults(JessieModel model, boolean localExecution) {
         checkDirectory(model, localExecution);
-
         defineTemplate(model);
-
-        if (!model.getOptions().containsKey(BeansXMLMode.OptionName.NAME)) {
-            model.getOptions().put(BeansXMLMode.OptionName.NAME, new OptionValue(BeansXMLMode.ANNOTATED.getMode()));
-        }
     }
 
     private void checkDirectory(JessieModel model, boolean localExecution) {
         if (model.getDirectory() == null) {
-            String modelFileName = model.getParameter(JessieModel.Parameter.FILENAME);
-            model.setDirectory(getDirectoryFromModelFileName(modelFileName));
+            model.setDirectory(getDirectoryFromModelFileName(model.getTemplate()));
         }
 
         if (localExecution) {

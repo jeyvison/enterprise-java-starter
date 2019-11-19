@@ -27,11 +27,8 @@ import org.eclipse.microprofile.starter.core.model.JessieModel;
 import org.eclipse.microprofile.starter.core.model.OptionValue;
 import org.eclipse.microprofile.starter.spi.AbstractAddon;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import java.util.*;
-
-import static org.eclipse.microprofile.starter.core.model.JessieModel.Parameter.MICROPROFILESPECS;
 
 /**
  *
@@ -75,8 +72,6 @@ public class JakartaServerAddon extends AbstractAddon {
         if (!invalidSpecs.isEmpty()) {
             throw new JessieConfigurationException(invalidSpecValue(invalidSpecs));
         }
-
-        model.addParameter(MICROPROFILESPECS, microprofileSpecs);
     }
 
     private void checkServerValue(JessieModel model) {

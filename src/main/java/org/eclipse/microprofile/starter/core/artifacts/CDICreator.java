@@ -22,9 +22,7 @@
  */
 package org.eclipse.microprofile.starter.core.artifacts;
 
-import org.eclipse.microprofile.starter.core.model.BeansXMLMode;
 import org.eclipse.microprofile.starter.core.model.JessieModel;
-import org.eclipse.microprofile.starter.core.model.OptionValue;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.Map;
@@ -37,14 +35,8 @@ import java.util.Set;
 public class CDICreator extends AbstractCreator {
 
     public void createCDIFilesForWeb(JessieModel model) {
-        BeansXMLMode mode = getMode(model);
-        if (mode == BeansXMLMode.IMPLICIT) {
-            // implicit means no beans.xml
-            return;
-        }
         Set<String> alternatives = model.getParameter(JessieModel.Parameter.ALTERNATIVES);
         Map<String, Object> variables = model.getVariables();
-        variables.put("beans_xml_mode", mode.getMode());
 
         createBeansXmlFile(model, alternatives, variables);
     }
@@ -57,24 +49,9 @@ public class CDICreator extends AbstractCreator {
         fileCreator.writeContents(webInfDirectory, "beans.xml", beansXMLContents);
     }
 
-    private BeansXMLMode getMode(JessieModel model) {
-        OptionValue optionValue = model.getOptions().get(BeansXMLMode.OptionName.NAME);
-        BeansXMLMode mode = BeansXMLMode.IMPLICIT;
-        if (optionValue != null) {
-            mode = BeansXMLMode.getValue(optionValue.getSingleValue());
-        }
-        return mode;
-    }
-
     public void createCDIFilesForJar(JessieModel model) {
-        BeansXMLMode mode = getMode(model);
-        if (mode == BeansXMLMode.IMPLICIT) {
-            // implicit means no beans.xml
-            return;
-        }
         Set<String> alternatives = model.getParameter(JessieModel.Parameter.ALTERNATIVES);
         Map<String, Object> variables = model.getVariables();
-        variables.put("beans_xml_mode", mode.getMode());
 
         String directory = model.getDirectory();
         String metaInfDirectory = directory + "/" + MavenCreator.SRC_MAIN_RESOURCES + "/META-INF";
@@ -82,7 +59,6 @@ public class CDICreator extends AbstractCreator {
 
         String beansXMLContents = thymeleafEngine.processFile("beans.xml", alternatives, variables);
         fileCreator.writeContents(metaInfDirectory, "beans.xml", beansXMLContents);
-
     }
 
 }

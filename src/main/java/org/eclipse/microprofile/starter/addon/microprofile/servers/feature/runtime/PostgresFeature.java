@@ -32,7 +32,7 @@ public class PostgresFeature extends AbstractFeature {
         SupportedServer supportedServer = SupportedServer.valueFor(serverName);
 
         if (supportedServer == SupportedServer.LIBERTY) {
-            processTemplateFile(model.getDirectory() + "src/main/liberty/config/defaults/", "postgres-driver.xml", alternatives, variables);
+            processTemplateFile(model.getDirectory() + "/src/main/liberty/config/defaults/", "postgres-driver.xml", alternatives, variables);
         }
     }
 

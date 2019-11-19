@@ -24,7 +24,6 @@ package org.eclipse.microprofile.starter.core.templates;
 
 import org.eclipse.microprofile.starter.core.exception.JessieUnexpectedException;
 import org.eclipse.microprofile.starter.core.exception.TechnicalException;
-import org.eclipse.microprofile.starter.core.file.ModelReader;
 import org.eclipse.microprofile.starter.core.file.YAMLReader;
 import org.eclipse.microprofile.starter.core.model.JessieModel;
 
@@ -42,9 +41,6 @@ import java.util.List;
  */
 @ApplicationScoped
 public class TemplateModelLoader {
-
-    @Inject
-    private ModelReader modelReader;
 
     @Inject
     private YAMLReader yamlReader;
@@ -78,7 +74,7 @@ public class TemplateModelLoader {
 
     public JessieModel loadTemplateValues(String templateName) {
         InputStream stream = this.getClass().getClassLoader().getResourceAsStream("templates/" + templateName + ".yaml");
-        return modelReader.readModel(stream, templateName);
+        return yamlReader.readYAML(stream, JessieModel.class);
     }
 
     public boolean isValidTemplate(String templateName) {

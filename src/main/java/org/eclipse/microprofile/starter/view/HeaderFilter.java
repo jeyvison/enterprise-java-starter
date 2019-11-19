@@ -34,6 +34,7 @@ import java.io.IOException;
  */
 @WebFilter(urlPatterns = "*.xhtml")
 public class HeaderFilter implements Filter {
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse servletResponse = (HttpServletResponse) response;

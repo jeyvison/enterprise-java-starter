@@ -35,7 +35,6 @@ public class EngineData {
 
     private String mpVersion;
     private String supportedServer;
-    private String beansxmlMode = "all";
     private List<String> selectedSpecs;
     private List<String> selectedFeatures;
 
@@ -82,14 +81,6 @@ public class EngineData {
 
     public void setSupportedServer(String supportedServer) {
         this.supportedServer = supportedServer;
-    }
-
-    public String getBeansxmlMode() {
-        return beansxmlMode;
-    }
-
-    public void setBeansxmlMode(String beansxmlMode) {
-        this.beansxmlMode = beansxmlMode;
     }
 
     public List<String> getSelectedSpecs() {

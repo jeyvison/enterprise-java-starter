@@ -29,19 +29,9 @@ import org.eclipse.microprofile.starter.addon.microprofile.servers.model.Support
 import org.eclipse.microprofile.starter.core.artifacts.Creator;
 import org.eclipse.microprofile.starter.core.exception.JessieException;
 import org.eclipse.microprofile.starter.core.exception.JessieUnexpectedException;
-import org.eclipse.microprofile.starter.core.model.BeansXMLMode;
-import org.eclipse.microprofile.starter.core.model.JavaSEVersion;
-import org.eclipse.microprofile.starter.core.model.JessieMaven;
-import org.eclipse.microprofile.starter.core.model.JessieModel;
-import org.eclipse.microprofile.starter.core.model.JessieSpecification;
-import org.eclipse.microprofile.starter.core.model.MicroProfileVersion;
-import org.eclipse.microprofile.starter.core.model.ModelManager;
-import org.eclipse.microprofile.starter.core.model.OptionValue;
-import org.eclipse.microprofile.starter.log.LoggingTask;
+import org.eclipse.microprofile.starter.core.model.*;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -52,12 +42,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -76,9 +61,6 @@ public class GeneratorDataBean implements Serializable {
 
     @Inject
     private Version version;
-
-    @Resource
-    private ManagedExecutorService managedExecutorService;
 
     private EngineData engineData;
 
@@ -193,13 +175,9 @@ public class GeneratorDataBean implements Serializable {
 
         model.setSpecification(specifications);
 
-        model.getOptions().put(BeansXMLMode.OptionName.NAME, new OptionValue(BeansXMLMode.getValue(engineData.getBeansxmlMode()).getMode()));
-
         try {
             modelManager.prepareModel(model, false);
             creator.createArtifacts(model);
-
-            managedExecutorService.submit(new LoggingTask(engineData));
 
             download(zipFileCreator.createArchive());
         } catch (JessieException e) {

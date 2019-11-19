@@ -39,6 +39,9 @@ import java.util.Map;
  */
 public class JessieModel {
 
+    /**
+     * The name of the top-level directory in the zip file. Usually corresponds to the project name.
+     */
     private String directory;
 
     @NotNull
@@ -128,7 +131,7 @@ public class JessieModel {
     }
 
     public enum Parameter {
-        FILENAME, ALTERNATIVES, ADDONS, MICROPROFILESPECS
+        ALTERNATIVES, ADDONS
     }
 
 }

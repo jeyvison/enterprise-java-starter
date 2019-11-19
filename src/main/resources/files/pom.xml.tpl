@@ -20,7 +20,8 @@
       <version>[# th:utext="${mp_version}"/]</version>
       <type>pom</type>
       <scope>provided</scope>
-    </dependency>[# th:each="dependency : ${jk_dependencies}"]
+    </dependency>
+[# th:each="dependency : ${jk_dependencies}"]
     <dependency>
       <groupId>[# th:utext="${dependency.groupId}"/]</groupId>
       <artifactId>[# th:utext="${dependency.artifactId}"/]</artifactId>
