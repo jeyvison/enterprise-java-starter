@@ -186,8 +186,8 @@ public class GeneratorDataBean implements Serializable {
 
         specifications.setMicroProfileVersion(MicroProfileVersion.valueFor(engineData.getMpVersion()));
 
-        model.getOptions().put("mp.server", new OptionValue(engineData.getSupportedServer()));
-        model.getOptions().put("mp.specs", new OptionValue(selectedSpecs));
+        model.getOptions().put("jk.server", new OptionValue(engineData.getSupportedServer()));
+        model.getOptions().put("jk.specs", new OptionValue(selectedSpecs));
 
         engineData.setSelectedSpecs(selectedSpecs);
 

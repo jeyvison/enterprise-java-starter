@@ -22,16 +22,13 @@
  */
 package org.eclipse.microprofile.starter.core.validation;
 
-import org.eclipse.microprofile.starter.addon.microprofile.servers.model.MicroprofileSpec;
 import org.eclipse.microprofile.starter.core.exception.JessieConfigurationException;
 import org.eclipse.microprofile.starter.core.model.JessieModel;
-import org.eclipse.microprofile.starter.core.model.OptionValue;
 import org.eclipse.microprofile.starter.core.templates.TemplateModelLoader;
 import org.eclipse.microprofile.starter.spi.JessieAddon;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,25 +44,6 @@ public class ModelValidation {
         if (!templateModelLoader.isValidTemplate(model.getTemplate())) {
             String message = String.format("Specified template '%s' is not found", model.getTemplate());
             throw new JessieConfigurationException(message);
-        }
-
-        determineSplitProject(model);
-    }
-
-    private void determineSplitProject(JessieModel model) {
-
-        OptionValue specs = model.getOptions().get("mp.specs");  //Here we still have the prefix mp.
-
-        List<MicroprofileSpec> microprofileSpecs = new ArrayList<>();
-
-        for (String spec : specs.getValues()) {
-            MicroprofileSpec microprofileSpec = MicroprofileSpec.valueFor(spec);
-            microprofileSpecs.add(microprofileSpec);
-        }
-
-        // If RestClient or JWTAuth is selected, then we need to generate 2 projects to have meaningful examples.
-        if (microprofileSpecs.contains(MicroprofileSpec.REST_CLIENT) || microprofileSpecs.contains(MicroprofileSpec.JWT_AUTH)) {
-            model.generateMainAndSecondaryProject();
         }
     }
 

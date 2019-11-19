@@ -95,8 +95,7 @@
                             <p:ajax listener="#{generatorDataBean.onMPVersionSelected}" update="options"/>
                         </p:selectOneMenu>
 
-                        <p:selectOneMenu id="javaSEVersion" value="#{generatorDataBean.engineData.javaSEVersion}"
-                                         disabled="true">
+                        <p:selectOneMenu id="javaSEVersion" value="#{generatorDataBean.engineData.javaSEVersion}">
                             <f:selectItems value="${dataBean.javaSEItems}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>

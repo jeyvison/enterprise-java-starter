@@ -37,6 +37,7 @@ public class EngineData {
     private String supportedServer;
     private String beansxmlMode = "all";
     private List<String> selectedSpecs;
+    private List<String> selectedFeatures;
 
     private TrafficSource trafficSource = TrafficSource.WEB;
 
@@ -97,6 +98,14 @@ public class EngineData {
 
     public void setSelectedSpecs(List<String> selectedSpecs) {
         this.selectedSpecs = selectedSpecs;
+    }
+
+    public List<String> getSelectedFeatures() {
+        return selectedFeatures;
+    }
+
+    public void setSelectedFeatures(List<String> selectedFeatures) {
+        this.selectedFeatures = selectedFeatures;
     }
 
     public TrafficSource getTrafficSource() {

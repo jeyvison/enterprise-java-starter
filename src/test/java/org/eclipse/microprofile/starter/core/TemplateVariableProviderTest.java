@@ -19,10 +19,7 @@
  */
 package org.eclipse.microprofile.starter.core;
 
-import org.eclipse.microprofile.starter.core.model.JessieMaven;
-import org.eclipse.microprofile.starter.core.model.JessieModel;
-import org.eclipse.microprofile.starter.core.model.JessieSpecification;
-import org.eclipse.microprofile.starter.core.model.MicroProfileVersion;
+import org.eclipse.microprofile.starter.core.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,11 +34,12 @@ public class TemplateVariableProviderTest {
         JessieMaven maven = new JessieMaven();
         JessieSpecification specification = new JessieSpecification();
         specification.setMicroProfileVersion(MicroProfileVersion.MP22);
+        specification.setJavaSEVersion(JavaSEVersion.SE8);
         maven.setArtifactId("demo-service");
         model.setMaven(maven);
         model.setSpecification(specification);
 
-        Map<String, String> variables = provider.determineVariables(model);
+        Map<String, Object> variables = provider.determineVariables(model);
 
         Assert.assertEquals("Demoservice", variables.get("application"));
     }

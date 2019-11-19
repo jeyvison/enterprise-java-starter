@@ -19,7 +19,6 @@ public class MetricController {
 
     @Inject
     @Metric(name = "endpoint_counter")
-
     private Counter counter;
 
     @Path("timed")
@@ -37,7 +36,6 @@ public class MetricController {
 
         return "Request is used in statistics, check with the Metrics call.";
     }
-
 
     @Path("increment")
     @GET

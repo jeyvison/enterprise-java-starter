@@ -13,7 +13,7 @@ This will create an executable jar file **[# th:text="${jar_file}"/]** within th
     java -jar target/[# th:text="${jar_file}"/] [# th:text="${jar_parameters}"/]
 
 
-[# th:if="${mp_servername} == 'liberty'"]
+[# th:if="${jk_servername} == 'liberty'"]
 ### Liberty's Dev Mode
 
 During development, you can use Liberty's development mode (dev mode) to code while observing and testing your changes on the fly.

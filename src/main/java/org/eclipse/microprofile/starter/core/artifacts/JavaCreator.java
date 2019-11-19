@@ -25,7 +25,6 @@ package org.eclipse.microprofile.starter.core.artifacts;
 import org.eclipse.microprofile.starter.core.model.JessieModel;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,28 +36,16 @@ public class JavaCreator extends AbstractCreator {
 
     public void createJavaFiles(JessieModel model) {
         Set<String> alternatives = model.getParameter(JessieModel.Parameter.ALTERNATIVES);
-        Map<String, String> variables = model.getVariables();
+        Map<String, Object> variables = model.getVariables();
 
         String rootJava = MavenCreator.SRC_MAIN_JAVA + "/" + directoryCreator.createPathForGroupAndArtifact(model.getMaven());
-        String viewDirectory = model.getDirectory(true) + "/" + rootJava;
+        String viewDirectory = model.getDirectory() + "/" + rootJava;
         directoryCreator.createDirectory(viewDirectory);
 
-        String application = variables.get("application");
         String javaFile = thymeleafEngine.processFile("RestApplication.java", alternatives, variables);
-        fileCreator.writeContents(viewDirectory, application + "RestApplication.java", javaFile);
+        fileCreator.writeContents(viewDirectory, variables.get("application") + "RestApplication.java", javaFile);
 
         javaFile = thymeleafEngine.processFile("HelloController.java", alternatives, variables);
         fileCreator.writeContents(viewDirectory, "HelloController.java", javaFile);
-
-        if (model.hasMainAndSecondaryProject()) {
-            viewDirectory = model.getDirectory(false) + "/" + rootJava;
-            directoryCreator.createDirectory(viewDirectory);
-
-            Set<String> tempAlternative = new HashSet<>(alternatives);
-            tempAlternative.add(JessieModel.SECONDARY_INDICATOR);
-            application = variables.get("application");
-            javaFile = thymeleafEngine.processFile("RestApplication.java", tempAlternative, variables);
-            fileCreator.writeContents(viewDirectory, application + "RestApplication.java", javaFile);
-        }
     }
 }

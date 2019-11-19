@@ -45,6 +45,11 @@ public class Creator {
     private JavaCreator javaCreator;
 
     public void createArtifacts(JessieModel model) {
+        List<JessieAddon> addons = model.getParameter(JessieModel.Parameter.ADDONS);
+
+        for (JessieAddon addon : addons) {
+            addon.initAddonProperties(model);
+        }
 
         mavenCreator.createMavenFiles(model);
 
@@ -52,7 +57,6 @@ public class Creator {
 
         javaCreator.createJavaFiles(model);
 
-        List<JessieAddon> addons = model.getParameter(JessieModel.Parameter.ADDONS);
         for (JessieAddon addon : addons) {
             addon.createFiles(model);
         }

@@ -45,11 +45,11 @@ public class FileCopyEngine {
 
         String fileIndication = filesLocator.findFile(file, alternatives);
 
-        if ("-1".equals(fileIndication)) {
+        if (fileIndication == null) {
             throw new FileResolutionException(file, alternatives);
         }
 
-        String sourceFile = "/" + filesLocator.getTemplateFile(fileIndication);
+        String sourceFile = "/" + fileIndication;
 
         InputStream resource = FileCopyEngine.class.getResourceAsStream(sourceFile);
         ByteArrayOutputStream result = new ByteArrayOutputStream();

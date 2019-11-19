@@ -24,7 +24,6 @@ package org.eclipse.microprofile.starter.core.addon;
 
 import org.eclipse.microprofile.starter.spi.JessieAddon;
 import org.eclipse.microprofile.starter.spi.JessieAlternativesProvider;
-import org.eclipse.microprofile.starter.spi.JessieMavenAdapter;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
@@ -45,9 +44,6 @@ public class AddonManager {
     @Inject
     private Instance<JessieAlternativesProvider> alternativeProviders;
 
-    @Inject
-    private Instance<JessieMavenAdapter> mavenAdapters;
-
     public List<JessieAddon> getAddons(String addonName) {
         List<JessieAddon> result = new ArrayList<>();
 
@@ -65,12 +61,6 @@ public class AddonManager {
 
         Iterator<JessieAlternativesProvider> alternativesIterator = alternativeProviders.iterator();
         return getProviders(alternativesIterator);
-    }
-
-    public List<JessieMavenAdapter> getMavenAdapters() {
-
-        Iterator<JessieMavenAdapter> mavenAdapterIterator = mavenAdapters.iterator();
-        return getProviders(mavenAdapterIterator);
     }
 
     private <T> List<T> getProviders(Iterator<T> alternativesIterator) {

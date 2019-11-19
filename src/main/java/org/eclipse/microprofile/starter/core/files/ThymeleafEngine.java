@@ -24,6 +24,7 @@ package org.eclipse.microprofile.starter.core.files;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 
 import javax.annotation.PostConstruct;
@@ -47,26 +48,27 @@ public class ThymeleafEngine {
     @PostConstruct
     public void init() {
         AbstractConfigurableTemplateResolver resolver = new JessieFileTemplateResolver(filesLocator);
-        resolver.setTemplateMode("TEXT");
+        resolver.setTemplateMode(TemplateMode.TEXT);
         engine = new TemplateEngine();
         engine.setTemplateResolver(resolver);
-
     }
 
-    public String processFile(String file, Set<String> alternatives, Map<String, String> variables) {
+    public String processFile(String file, Set<String> alternatives, Map<String, Object> variables) {
         StringWriter writer = new StringWriter();
         Context context = new Context();
 
-        for (Map.Entry<String, String> variable : variables.entrySet()) {
+        for (Map.Entry<String, Object> variable : variables.entrySet()) {
             context.setVariable(variable.getKey(), variable.getValue());
         }
 
         String fileIndication = filesLocator.findFile(file, alternatives);
 
-        if ("-1".equals(fileIndication)) {
+        if (fileIndication == null) {
             throw new TemplateFileResolutionException(file, alternatives);
         }
+
         engine.process(fileIndication, context, writer);
+//        engine.process(file, context, writer);
 
         return writer.toString();
 

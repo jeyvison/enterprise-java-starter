@@ -32,13 +32,20 @@ import java.util.Map;
  *
  */
 
-public interface JessieAddon extends JessieAlternativesProvider, JessieMavenAdapter {
+public interface JessieAddon extends JessieAlternativesProvider {
 
     String addonName();
 
-    int priority();  // Whe can't use @Priority as the annotation is lost when CDI proxies are created.
+    /**
+     * The priority after which addons will be sorted. A lower value will be considered first.
+     * <p>
+     * We can't use {@code @Priority} as the annotation is lost when CDI proxies are created.
+     */
+    int priority();
 
     void addonOptions(Map<String, OptionValue> options);
+
+    void initAddonProperties(JessieModel model);
 
     /**
      * Return the addons on which this addon is dependent. Conditionally when based on the JessieModel

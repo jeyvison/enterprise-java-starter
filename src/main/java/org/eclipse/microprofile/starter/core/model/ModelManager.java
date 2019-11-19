@@ -81,7 +81,7 @@ public class ModelManager {
         Set<String> alternatives = determineAlternatives(model, allAddons);
         model.addParameter(JessieModel.Parameter.ALTERNATIVES, alternatives);
 
-        Map<String, String> variables = templateVariableProvider.determineVariables(model);
+        Map<String, Object> variables = templateVariableProvider.determineVariables(model);
         model.addVariables(variables);
     }
 

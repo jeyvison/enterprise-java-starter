@@ -22,18 +22,12 @@ package org.eclipse.microprofile.starter.rest;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.starter.Version;
 import org.eclipse.microprofile.starter.ZipFileCreator;
+import org.eclipse.microprofile.starter.addon.microprofile.servers.model.Feature;
 import org.eclipse.microprofile.starter.addon.microprofile.servers.model.MicroprofileSpec;
 import org.eclipse.microprofile.starter.addon.microprofile.servers.model.SupportedServer;
 import org.eclipse.microprofile.starter.core.artifacts.Creator;
 import org.eclipse.microprofile.starter.core.files.FilesLocator;
-import org.eclipse.microprofile.starter.core.model.BeansXMLMode;
-import org.eclipse.microprofile.starter.core.model.JavaSEVersion;
-import org.eclipse.microprofile.starter.core.model.JessieMaven;
-import org.eclipse.microprofile.starter.core.model.JessieModel;
-import org.eclipse.microprofile.starter.core.model.JessieSpecification;
-import org.eclipse.microprofile.starter.core.model.MicroProfileVersion;
-import org.eclipse.microprofile.starter.core.model.ModelManager;
-import org.eclipse.microprofile.starter.core.model.OptionValue;
+import org.eclipse.microprofile.starter.core.model.*;
 import org.eclipse.microprofile.starter.core.validation.PackageNameValidator;
 import org.eclipse.microprofile.starter.log.LoggingTask;
 import org.eclipse.microprofile.starter.rest.model.MPOptionsAvailable;
@@ -48,14 +42,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -229,7 +216,8 @@ public class APIService {
                                String groupId, String artifactId,
                                MicroProfileVersion mpVersion,
                                JavaSEVersion javaSEVersion,
-                               List<MicroprofileSpec> selectedSpecs) {
+                               List<MicroprofileSpec> selectedSpecs,
+                               List<Feature> selectedFeatures) {
         Project project = new Project();
         project.setSupportedServer(supportedServer);
         project.setGroupId(groupId);
@@ -237,6 +225,7 @@ public class APIService {
         project.setMpVersion(mpVersion);
         project.setJavaSEVersion(javaSEVersion);
         project.setSelectedSpecs(selectedSpecs);
+        project.setSelectedFeatures(selectedFeatures);
         return processProject(ifNoneMatch, project);
     }
 
@@ -309,28 +298,31 @@ public class APIService {
     private EngineData getEngineData(Project p) {
         List<String> selectedSpecs = p.getSelectedSpecs().stream()
                 .map(MicroprofileSpec::getCode).collect(Collectors.toList());
+        List<String> selectedFeatures = p.getSelectedFeatures().stream()
+                .map(Feature::getCode).collect(Collectors.toList());
         EngineData engineData = new EngineData();
         engineData.getMavenData().setGroupId(p.getGroupId());
         engineData.getMavenData().setArtifactId(p.getArtifactId());
         engineData.setTrafficSource(EngineData.TrafficSource.REST);
         engineData.setSelectedSpecs(selectedSpecs);
+        engineData.setSelectedFeatures(selectedFeatures);
         engineData.setSupportedServer(p.getSupportedServer().getCode());
         engineData.setMpVersion(p.getMpVersion().getCode());
         return engineData;
     }
 
-    private Response processProject(String ifNoneMatch, Project p) {
+    private Response processProject(String ifNoneMatch, Project project) {
 
-        Response validatorResponse = validate(p);
-        if (validatorResponse.getStatusInfo() != Response.Status.OK) {
+        Response validatorResponse = validate(project);
+        if (validatorResponse.getStatusInfo().getFamily() != Response.Status.Family.SUCCESSFUL) {
             return validatorResponse;
         }
 
-        EngineData ed = getEngineData(p);
+        EngineData ed = getEngineData(project);
 
         managedExecutorService.submit(new LoggingTask(ed));
 
-        EntityTag etag = new EntityTag(Integer.toHexString(31 * version.getGit().hashCode() + p.hashCode()));
+        EntityTag etag = new EntityTag(Integer.toHexString(31 * version.getGit().hashCode() + project.hashCode()));
 
         if (ifNoneMatch != null) {
             if (etag.toString().equals(ifNoneMatch)) {
@@ -347,13 +339,14 @@ public class APIService {
         model.setMaven(mavenModel);
 
         JessieSpecification specifications = new JessieSpecification();
-        specifications.setJavaSEVersion(p.getJavaSEVersion());
-        specifications.setMicroProfileVersion(p.getMpVersion());
+        specifications.setJavaSEVersion(project.getJavaSEVersion());
+        specifications.setMicroProfileVersion(project.getMpVersion());
 
-        model.getOptions().put("mp.server", new OptionValue(ed.getSupportedServer()));
-        model.getOptions().put("mp.specs", new OptionValue(ed.getSelectedSpecs()));
+        model.getOptions().put("jk.server", new OptionValue(ed.getSupportedServer()));
+        model.getOptions().put("jk.specs", new OptionValue(ed.getSelectedSpecs()));
 
         model.setSpecification(specifications);
+        model.getAddons().addAll(ed.getSelectedFeatures());
 
         model.getOptions().put(BeansXMLMode.OptionName.NAME,
                 new OptionValue(BeansXMLMode.getValue(ed.getBeansxmlMode()).getMode()));

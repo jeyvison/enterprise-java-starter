@@ -72,7 +72,7 @@ If a specific one for the MP version exists, the `thorntail-2.2` profile is used
     |Description | Longer description used by the REST API.|
     |Supported MP Versions | List of MicroProfile versions containing the specification.|
 
-* Add an `if-structure` to the method **createFiles()** of **org.eclipse.microprofile.starter.addon.microprofile.servers.MicroprofileServersAddon** so that files are included in the demo application when the specification is selected.
+* Add an `if-structure` to the method **createFiles()** of **org.eclipse.microprofile.starter.addon.microprofile.servers.JakartaServerAddon** so that files are included in the demo application when the specification is selected.
 * Update the **readme.md.tpl** to include some basic information about this new specification. Make this addition conditional (see other specification on how to do this)
 
 ## Adding a new MicroProfile Version

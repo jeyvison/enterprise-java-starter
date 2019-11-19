@@ -35,10 +35,13 @@ import java.util.Map;
 @ApplicationScoped
 public class TemplateVariableProvider {
 
-    public Map<String, String> determineVariables(JessieModel model) {
-        Map<String, String> result = new HashMap<>();
+    public Map<String, Object> determineVariables(JessieModel model) {
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("java_version", model.getSpecification().getJavaSEVersion().getCode());
 
         result.put("java_package", model.getMaven().getGroupId() + '.' + model.getMaven().getPackage());
+        result.put("maven_groupid", model.getMaven().getGroupId());
         result.put("maven_artifactid", model.getMaven().getArtifactId());
 
         String artifactId = model.getMaven().getArtifactId().replaceAll("\\.", "");

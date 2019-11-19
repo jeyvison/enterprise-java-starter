@@ -22,5 +22,5 @@
 #
 
 specification:
-   javaSE : 1.8
-addons : [mp]
+   javaSE : 12
+addons : [jk]

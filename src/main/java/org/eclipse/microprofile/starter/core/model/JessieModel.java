@@ -39,12 +39,7 @@ import java.util.Map;
  */
 public class JessieModel {
 
-    public static final String MAIN_INDICATOR = "service-a";
-    public static final String SECONDARY_INDICATOR = "service-b";
-
-    private String topLevelDirectory;
-    private String mainDirectory;
-    private String secondaryDirectory;
+    private String directory;
 
     @NotNull
     @Valid
@@ -63,35 +58,14 @@ public class JessieModel {
     private Map<String, Object> parameters = new HashMap<>();
 
     @JsonIgnore
-    private Map<String, String> variables = new HashMap<>();
+    private Map<String, Object> variables = new HashMap<>();
 
-    /**
-     * The root directory of the main application (containing the main/demo application)
-     * or the secondary application.
-     *
-     * @return directory location for main or secondary application.
-     */
-    public String getDirectory(boolean mainProject) {
-        return mainProject ? mainDirectory : secondaryDirectory;
-    }
-
-    public String getTopLevelDirectory() {
-        return topLevelDirectory;
+    public String getDirectory() {
+        return directory;
     }
 
     public void setDirectory(String directory) {
-        topLevelDirectory = directory;
-        mainDirectory = directory;
-        secondaryDirectory = directory;
-    }
-
-    public void generateMainAndSecondaryProject() {
-        mainDirectory = topLevelDirectory + "/" + MAIN_INDICATOR;
-        secondaryDirectory = topLevelDirectory + "/" + SECONDARY_INDICATOR;
-    }
-
-    public boolean hasMainAndSecondaryProject() {
-        return !mainDirectory.equals(secondaryDirectory);
+        this.directory = directory;
     }
 
     public JessieMaven getMaven() {
@@ -133,15 +107,15 @@ public class JessieModel {
         return options;
     }
 
-    public void addVariable(String name, String value) {
+    public void addVariable(String name, Object value) {
         variables.put(name, value);
     }
 
-    public void addVariables(Map<String, String> variables) {
+    public void addVariables(Map<String, Object> variables) {
         variables.forEach(this::addVariable);
     }
 
-    public Map<String, String> getVariables() {
+    public Map<String, Object> getVariables() {
         return variables;
     }
 

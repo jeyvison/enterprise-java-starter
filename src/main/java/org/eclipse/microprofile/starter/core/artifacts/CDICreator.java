@@ -43,17 +43,14 @@ public class CDICreator extends AbstractCreator {
             return;
         }
         Set<String> alternatives = model.getParameter(JessieModel.Parameter.ALTERNATIVES);
-        Map<String, String> variables = model.getVariables();
+        Map<String, Object> variables = model.getVariables();
         variables.put("beans_xml_mode", mode.getMode());
 
-        createBeansXmlFile(model, alternatives, variables, true);
-        if (model.hasMainAndSecondaryProject()) {
-            createBeansXmlFile(model, alternatives, variables, false);
-        }
+        createBeansXmlFile(model, alternatives, variables);
     }
 
-    private void createBeansXmlFile(JessieModel model, Set<String> alternatives, Map<String, String> variables, boolean mainProject) {
-        String webInfDirectory = model.getDirectory(mainProject) + "/" + MavenCreator.SRC_MAIN_WEBAPP + "/WEB-INF";
+    private void createBeansXmlFile(JessieModel model, Set<String> alternatives, Map<String, Object> variables) {
+        String webInfDirectory = model.getDirectory() + "/" + MavenCreator.SRC_MAIN_WEBAPP + "/WEB-INF";
         directoryCreator.createDirectory(webInfDirectory);
 
         String beansXMLContents = thymeleafEngine.processFile("beans.xml", alternatives, variables);
@@ -69,17 +66,17 @@ public class CDICreator extends AbstractCreator {
         return mode;
     }
 
-    public void createCDIFilesForJar(JessieModel model, boolean mainProject) {
+    public void createCDIFilesForJar(JessieModel model) {
         BeansXMLMode mode = getMode(model);
         if (mode == BeansXMLMode.IMPLICIT) {
             // implicit means no beans.xml
             return;
         }
         Set<String> alternatives = model.getParameter(JessieModel.Parameter.ALTERNATIVES);
-        Map<String, String> variables = model.getVariables();
+        Map<String, Object> variables = model.getVariables();
         variables.put("beans_xml_mode", mode.getMode());
 
-        String directory = model.getDirectory(mainProject);
+        String directory = model.getDirectory();
         String metaInfDirectory = directory + "/" + MavenCreator.SRC_MAIN_RESOURCES + "/META-INF";
         directoryCreator.createDirectory(metaInfDirectory);
 

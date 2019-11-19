@@ -19,6 +19,7 @@
  */
 package org.eclipse.microprofile.starter.rest;
 
+import org.eclipse.microprofile.starter.addon.microprofile.servers.model.Feature;
 import org.eclipse.microprofile.starter.addon.microprofile.servers.model.MicroprofileSpec;
 import org.eclipse.microprofile.starter.addon.microprofile.servers.model.SupportedServer;
 import org.eclipse.microprofile.starter.core.model.JavaSEVersion;
@@ -92,8 +93,9 @@ public class APIEndpointLatest {
                                @QueryParam("artifactId") String artifactId,
                                @QueryParam("mpVersion") MicroProfileVersion mpVersion,
                                @QueryParam("javaSEVersion") JavaSEVersion javaSEVersion,
-                               @QueryParam("selectedSpecs") List<MicroprofileSpec> selectedSpecs) {
-        return api.getProject(ifNoneMatch, supportedServer, groupId, artifactId, mpVersion, javaSEVersion, selectedSpecs);
+                               @QueryParam("selectedSpecs") List<MicroprofileSpec> selectedSpecs,
+                               @QueryParam("selectedFeatures") List<Feature> selectedFeatures) {
+        return api.getProject(ifNoneMatch, supportedServer, groupId, artifactId, mpVersion, javaSEVersion, selectedSpecs, selectedFeatures);
     }
 
     @Path("/project")

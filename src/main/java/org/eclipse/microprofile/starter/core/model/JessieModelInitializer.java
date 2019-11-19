@@ -45,13 +45,13 @@ public class JessieModelInitializer {
     }
 
     private void checkDirectory(JessieModel model, boolean localExecution) {
-        if (model.getDirectory(true) == null) {
+        if (model.getDirectory() == null) {
             String modelFileName = model.getParameter(JessieModel.Parameter.FILENAME);
             model.setDirectory(getDirectoryFromModelFileName(modelFileName));
         }
 
         if (localExecution) {
-            File file = new File(model.getDirectory(true));
+            File file = new File(model.getDirectory());
             try {
                 model.setDirectory(file.getCanonicalPath());
             } catch (IOException e) {
@@ -70,7 +70,6 @@ public class JessieModelInitializer {
     }
 
     private void defineTemplate(JessieModel model) {
-
-        model.setTemplate("defaultMP");
+        model.setTemplate("default");
     }
 }

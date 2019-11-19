@@ -19,6 +19,7 @@
  */
 package org.eclipse.microprofile.starter.rest.model;
 
+import org.eclipse.microprofile.starter.addon.microprofile.servers.model.Feature;
 import org.eclipse.microprofile.starter.addon.microprofile.servers.model.MicroprofileSpec;
 import org.eclipse.microprofile.starter.addon.microprofile.servers.model.SupportedServer;
 import org.eclipse.microprofile.starter.core.model.JavaSEVersion;
@@ -29,12 +30,14 @@ import java.util.Objects;
 
 
 public class Project {
+
     private String groupId = null;
     private String artifactId = null;
     private MicroProfileVersion mpVersion = null;
     private JavaSEVersion javaSEVersion = null;
     private SupportedServer supportedServer = null;
     private List<MicroprofileSpec> selectedSpecs = null;
+    private List<Feature> selectedFeatures = null;
 
     public String getGroupId() {
         return groupId;
@@ -84,6 +87,14 @@ public class Project {
         this.selectedSpecs = selectedSpecs;
     }
 
+    public List<Feature> getSelectedFeatures() {
+        return selectedFeatures;
+    }
+
+    public void setSelectedFeatures(List<Feature> selectedFeatures) {
+        this.selectedFeatures = selectedFeatures;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -93,16 +104,17 @@ public class Project {
             return false;
         }
         Project project = (Project) o;
-        return Objects.equals(groupId, project.groupId) &&
-                Objects.equals(artifactId, project.artifactId) &&
-                mpVersion == project.mpVersion &&
-                javaSEVersion == project.javaSEVersion &&
-                supportedServer == project.supportedServer &&
-                Objects.equals(selectedSpecs, project.selectedSpecs);
+        return Objects.equals(groupId, project.groupId)
+                && Objects.equals(artifactId, project.artifactId)
+                && mpVersion == project.mpVersion
+                && javaSEVersion == project.javaSEVersion
+                && supportedServer == project.supportedServer
+                && Objects.equals(selectedFeatures, project.selectedFeatures)
+                && Objects.equals(selectedSpecs, project.selectedSpecs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupId, artifactId, mpVersion, javaSEVersion, supportedServer, selectedSpecs);
+        return Objects.hash(groupId, artifactId, mpVersion, javaSEVersion, supportedServer, selectedFeatures, selectedSpecs);
     }
 }

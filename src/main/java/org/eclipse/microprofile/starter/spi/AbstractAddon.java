@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Contributors to the Eclipse Foundation
+ * Copyright (c) 2019 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -16,9 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Contributors:
- *   2018-09-29 - Rudy De Busscher
- *      Initially authored in Atbash Jessie
  */
 package org.eclipse.microprofile.starter.spi;
 
@@ -31,17 +28,12 @@ import org.eclipse.microprofile.starter.core.model.JessieModel;
 import org.eclipse.microprofile.starter.core.model.OptionValue;
 
 import javax.inject.Inject;
-import java.util.Map;
-import java.util.Set;
-
-/**
- *
- */
+import java.util.*;
 
 public abstract class AbstractAddon implements JessieAddon {
 
     protected Map<String, OptionValue> options;
-    protected Map<String, String> defaultOptions;
+    protected Map<String, String> defaultOptions = new HashMap<>();
 
     @Inject
     protected ThymeleafEngine thymeleafEngine;
@@ -54,6 +46,26 @@ public abstract class AbstractAddon implements JessieAddon {
 
     @Inject
     protected FileCreator fileCreator;
+
+    @Override
+    public int priority() {
+        return 70;
+    }
+
+    @Override
+    public Map<String, String> getConditionalConfiguration(JessieModel jessieModel, List<JessieAddon> addons) {
+        return defaultOptions;
+    }
+
+    @Override
+    public List<String> getDependentAddons(JessieModel model) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Set<String> alternativesNames(JessieModel model) {
+        return Collections.emptySet();
+    }
 
     @Override
     public final void addonOptions(Map<String, OptionValue> options) {
@@ -69,8 +81,8 @@ public abstract class AbstractAddon implements JessieAddon {
 
     }
 
-    protected final String getResourceDirectory(JessieModel model, boolean mainProject) {
-        return model.getDirectory(mainProject) + "/" + MavenCreator.SRC_MAIN_RESOURCES;
+    protected final String getResourceDirectory(JessieModel model) {
+        return model.getDirectory() + "/" + MavenCreator.SRC_MAIN_RESOURCES;
     }
 
     protected final String getJavaApplicationRootPackage(JessieModel model) {
@@ -78,12 +90,12 @@ public abstract class AbstractAddon implements JessieAddon {
     }
 
     protected final void processTemplateFile(String directory, String templateFileName, String fileName,
-                                             Set<String> alternatives, Map<String, String> variables) {
+                                             Set<String> alternatives, Map<String, Object> variables) {
         String javaFile = thymeleafEngine.processFile(templateFileName, alternatives, variables);
         fileCreator.writeContents(directory, fileName, javaFile);
     }
 
-    protected final void processTemplateFile(String directory, String fileName, Set<String> alternatives, Map<String, String> variables) {
+    protected final void processTemplateFile(String directory, String fileName, Set<String> alternatives, Map<String, Object> variables) {
         String javaFile = thymeleafEngine.processFile(fileName, alternatives, variables);
         fileCreator.writeContents(directory, fileName, javaFile);
     }
@@ -92,5 +104,4 @@ public abstract class AbstractAddon implements JessieAddon {
         byte[] fileContent = fileCopyEngine.processFile(fileName, alternatives);
         fileCreator.writeContents(directory, fileName, fileContent);
     }
-
 }

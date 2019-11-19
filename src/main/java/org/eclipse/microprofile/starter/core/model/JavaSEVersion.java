@@ -26,7 +26,12 @@ package org.eclipse.microprofile.starter.core.model;
  *
  */
 public enum JavaSEVersion implements ComboBoxItem {
-    NONE(null, ""), SE7("1.7", "Java 7"), SE8("1.8", "Java 8");
+
+    NONE(null, ""),
+    SE7("1.7", "Java 7"),
+    SE8("1.8", "Java 8"),
+    SE11("11", "Java 11"),
+    SE12("12", "Java 12");
 
     private String code;
     private String label;

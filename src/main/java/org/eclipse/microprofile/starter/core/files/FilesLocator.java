@@ -61,7 +61,11 @@ public class FilesLocator {
             }
         }
 
-        return String.valueOf(result);
+        if (result == -1) {
+            return null;
+        }
+
+        return fileNames.get(result);
     }
 
     private int selectBasedOnAlternatives(List<FileIdentification> candidates, Set<String> alternatives) {
@@ -146,8 +150,10 @@ public class FilesLocator {
         return uniqueCombinations;
     }
 
-    public String getTemplateFile(String index) {
-        return fileNames.get(Integer.valueOf(index));
+    public String getTemplateFileByLocation(String name) {
+        return fileNames.stream()
+                .filter(i -> i.contains(name))
+                .findAny().orElseThrow(() -> new IllegalArgumentException("Could not find file for name " + name));
     }
 
     private void defineResources(Pattern pattern) {
