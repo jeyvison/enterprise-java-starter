@@ -17,11 +17,18 @@
     <dependency>
       <groupId>org.eclipse.microprofile</groupId>
       <artifactId>microprofile</artifactId>
-      <version>[# th:utext="${mp_version}"/]</version>
+      <version>[# th:utext="${mp_mvn_version}"/]</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>
-[# th:each="dependency : ${jk_dependencies}"]
+[# th:each="dependency : ${dependencies}"]
+    <dependency>
+      <groupId>[# th:utext="${dependency.groupId}"/]</groupId>
+      <artifactId>[# th:utext="${dependency.artifactId}"/]</artifactId>
+      <version>[# th:utext="${dependency.version}"/]</version>
+      <scope>[# th:utext="${dependency.scope}"/]</scope>
+    </dependency>
+[/][# th:each="dependency : ${test_dependencies}"]
     <dependency>
       <groupId>[# th:utext="${dependency.groupId}"/]</groupId>
       <artifactId>[# th:utext="${dependency.artifactId}"/]</artifactId>

@@ -21,6 +21,5 @@
 #      Initially authored in Atbash Jessie
 #
 
-specification:
-   javaSE : 12
+javaSE : 12
 addons : [jk]

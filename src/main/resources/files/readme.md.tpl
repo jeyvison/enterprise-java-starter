@@ -35,7 +35,7 @@ Also, a simple Hello world endpoint is created, have a look at the class **Hello
 
 More information on MicroProfile can be found [here](https://microprofile.io/)
 
-[# th:if="${mp_config}"]
+[# th:if="${examples_mp_config}"]
 ### Config
 
 Configuration of your application parameters. Specification [here](https://microprofile.io/project/eclipse/microprofile-config)
@@ -43,7 +43,7 @@ Configuration of your application parameters. Specification [here](https://micro
 The example class **ConfigTestController** shows you how to inject a configuration parameter and how you can retrieve it programmatically.
 [/]
 
-[# th:if="${mp_fault_tolerance}"]
+[# th:if="${examples_mp_fault_tolerance}"]
 ### Fault tolerance
 
 Add resilient features to your applications like TimeOut, RetryPolicy, Fallback, bulkhead and circuit breaker. Specification [here](https://microprofile.io/project/eclipse/microprofile-fault-tolerance)
@@ -51,7 +51,7 @@ Add resilient features to your applications like TimeOut, RetryPolicy, Fallback,
 The example class **ResilienceController** has an example of a FallBack mechanism where an fallback result is returned when the execution takes too long.
 [/]
 
-[# th:if="${mp_health_checks}"]
+[# th:if="${examples_mp_health_checks}"]
 ### Health
 
 The health status can be used to determine if the 'computing node' needs to be discarded/restarted or not. Specification [here](https://microprofile.io/project/eclipse/microprofile-health)
@@ -59,7 +59,7 @@ The health status can be used to determine if the 'computing node' needs to be d
 The class **ServiceHealthCheck** contains an example of a custom check which can be integrated to health status checks of the instance.  The index page contains a link to the status data.
 [/]
 
-[# th:if="${mp_metrics}"]
+[# th:if="${examples_mp_metrics}"]
 ### Metrics
 
 The Metrics exports _Telemetric_ data in a uniform way of system and custom resources. Specification [here](https://microprofile.io/project/eclipse/microprofile-metrics)
@@ -67,7 +67,7 @@ The Metrics exports _Telemetric_ data in a uniform way of system and custom reso
 The example class **MetricController** contains an example how you can measure the execution time of a request.  The index page also contains a link to the metric page (with all metric info)
 [/]
 
-[# th:if="${mp_JWT_auth}"]
+[# th:if="${examples_mp_JWT_auth}"]
 ### JWT Auth
 
 Using the OpenId Connect JWT token to pass authentication and authorization information to the JAX-RS endpoint. Specification [here](https://microprofile.io/project/eclipse/microprofile-rest-client)
@@ -79,7 +79,7 @@ The _TestSecureController_ code creates a JWT based on the private key found wit
 However, any method to send a REST request with an appropriate header will work of course. Please feel free to change this code to your needs.
 [/]
 
-[# th:if="${mp_open_API}"]
+[# th:if="${examples_mp_open_API}"]
 ### Open API
 
 Exposes the information about your endpoints in the format of the OpenAPI v3 specification. Specification [here](https://microprofile.io/project/eclipse/microprofile-open-api)
@@ -88,7 +88,7 @@ The index page contains a link to the OpenAPI information of your endpoints.
 
 [/]
 
-[# th:if="${mp_open_tracing}"]
+[# th:if="${examples_mp_open_tracing}"]
 ### Open Tracing
 
 Allow the participation in distributed tracing of your requests through various micro services. Specification [here](https://microprofile.io/project/eclipse/microprofile-opentracing)
@@ -96,7 +96,7 @@ Allow the participation in distributed tracing of your requests through various 
 Example needs to be created.
 [/]
 
-[# th:if="${mp_rest_client}"]
+[# th:if="${examples_mp_rest_client}"]
 ### Rest Client
 
 A type safe invocation of HTTP rest endpoints. Specification [here](https://microprofile.io/project/eclipse/microprofile-rest-client)

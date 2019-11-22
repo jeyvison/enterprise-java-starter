@@ -24,7 +24,7 @@ unit and integration tests are run on pressing Enter in the command terminal; yo
 [/]
 ## Specification examples
 
-[# th:if="${mp_JWT_auth}"]
+[# th:if="${examples_mp_JWT_auth}"]
 ### JWT Auth
 
 Have a look at the **TestSecureController** class (main application) which calls the protected endpoint on the secondary application.
@@ -35,7 +35,7 @@ However, any method to send a REST request with an appropriate header will work 
 [/]
 
 
-[# th:if="${mp_rest_client}"]
+[# th:if="${examples_mp_rest_client}"]
 ### Rest Client
 
 A type safe invocation of HTTP rest endpoints. Specification [here](https://microprofile.io/project/eclipse/microprofile-rest-client)

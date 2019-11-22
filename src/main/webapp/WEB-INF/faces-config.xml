@@ -25,6 +25,6 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
     <factory>
-        <exception-handler-factory> org.eclipse.microprofile.starter.exception.CustomExceptionHandlerFactory</exception-handler-factory>
+        <exception-handler-factory>org.eclipse.starter.presentation.CustomExceptionHandlerFactory</exception-handler-factory>
     </factory>
 </faces-config>

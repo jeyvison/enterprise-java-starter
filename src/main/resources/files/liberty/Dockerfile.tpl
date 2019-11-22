@@ -1,6 +1,6 @@
 FROM open-liberty:javaee8-java12
 
-[# th:each="entry : ${jk_runtime_features}"]
+[# th:each="entry : ${runtime_features}"]
 ADD [# th:utext="${entry.key}"/] /lib/[# th:utext="${entry.value}"/]
 [/]
 
