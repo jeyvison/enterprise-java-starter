@@ -20,6 +20,7 @@ The starter is built around the following principles:
 - Providing examples for building and running the generated project and optional examples for using Jakarta EE and MicroProfile technologies, e.g. testing, persistence, or configuration
 
 The starter supports the following project mode:
+
 - Thin WAR, Docker, with all runtime or provided dependencies being installed in a base image layer
 - Standalone JAR, ideally 
 - Supporting Maven, Docker
@@ -28,7 +29,10 @@ The starter plans to supports adding the most-prominent project dependencies (e.
 
 The started supports Enterprise Java runtimes that support both Java EE/Jakarta EE and MicroProfile.
 Currently, the plan includes the following:
+
 - Open Liberty
 - Payara Server
 - Tom EE
 - WildFly
+
+
