@@ -21,10 +21,7 @@
 package org.eclipse.starter.business.addons.control;
 
 import org.eclipse.starter.business.exception.JessieConfigurationException;
-import org.eclipse.starter.business.model.entity.JakartaRuntime;
-import org.eclipse.starter.business.model.entity.JessieModel;
-import org.eclipse.starter.business.model.entity.MavenDependency;
-import org.eclipse.starter.business.model.entity.SpecificationExample;
+import org.eclipse.starter.business.model.entity.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.*;
@@ -73,16 +70,33 @@ public class JakartaServerAddon extends AbstractAddon {
 
     @Override
     public void initProperties(JessieModel model) {
+        model.getVariables().put("jk_server_http_port", "8080");
         model.getVariables().put("runtime_features", new HashMap<>());
         model.getVariables().put("dependencies", new ArrayList<>());
 
         List<MavenDependency> testDependencies = new ArrayList<>();
+        List<MavenPlugin> plugins = new ArrayList<>();
 
         if (model.getSelectedExamples().contains(SpecificationExample.TESTS)) {
-            testDependencies.add(new MavenDependency("junit", "junit", "4.12", "test"));
+            testDependencies.add(new MavenDependency("org.junit.jupiter", "junit-jupiter-api", "5.4.2", "test"));
+            testDependencies.add(new MavenDependency("org.junit.jupiter", "junit-jupiter-engine", "5.4.2", "test"));
+            testDependencies.add(new MavenDependency("org.mockito", "mockito-core", "2.27.0", "test"));
+            testDependencies.add(new MavenDependency("org.assertj", "assertj-core", "3.12.1", "test"));
+
+            testDependencies.add(new MavenDependency("org.glassfish.jersey.core", "jersey-client", "2.28", "test"));
+            testDependencies.add(new MavenDependency("org.glassfish.jersey.inject", "jersey-hk2", "2.28", "test"));
+
+            plugins.add(new MavenPlugin("org.apache.maven.plugins", "maven-surefire-plugin", "2.22.2"));
+            plugins.add(new MavenPlugin("org.apache.maven.plugins", "maven-failsafe-plugin", "2.22.2"));
+
+            if (model.getJavaSEVersion().isJigsaw()) {
+                testDependencies.add(new MavenDependency("javax.activation", "activation", "1.1", "test"));
+                plugins.add(new MavenPlugin("org.apache.maven.plugins", "maven-war-plugin", "3.2.2"));
+            }
         }
 
         model.getVariables().put("test_dependencies", testDependencies);
+        model.getVariables().put("maven_plugins", plugins);
     }
 
     @Override
@@ -104,7 +118,8 @@ public class JakartaServerAddon extends AbstractAddon {
             directoryCreator.createDirectory(testCode);
 
             processTemplateFile(testCode, "SimpleTest.java", variables);
-
+            processTemplateFile(testCode, "HelloIT.java", variables);
+            processTemplateFile(testCode, "HelloSystem.java", variables);
         }
 
         if (examples.contains(SpecificationExample.MP_HEALTH_CHECKS)) {
@@ -119,6 +134,11 @@ public class JakartaServerAddon extends AbstractAddon {
             directoryCreator.createDirectory(configDirectory);
 
             processTemplateFile(configDirectory, "ConfigTestController.java", variables);
+
+            String metaInfDirectory = getResourceDirectory(model) + "/META-INF";
+            directoryCreator.createDirectory(metaInfDirectory);
+
+            processTemplateFile(metaInfDirectory, "microprofile-config.properties", variables);
         }
 
         if (examples.contains(SpecificationExample.MP_METRICS)) {
@@ -154,7 +174,7 @@ public class JakartaServerAddon extends AbstractAddon {
             processTemplateFile(resourceDirectory, "privateKey.pem", variables);
         }
 
-        processTemplateFile(model.getDirectory(), "readme.md", variables);
+        processTemplateFile(model.getDirectory(), "README.adoc", variables);
     }
 
     private String defineJarFileName(JakartaRuntime jakartaRuntime, String artifactId) {

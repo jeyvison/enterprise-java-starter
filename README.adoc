@@ -1,0 +1,34 @@
+= Enterprise Java Starter
+
+This is currently a work-in-progress project.
+
+
+== Motivation
+
+A lot of enterprise developers struggle how to setup a quick, modern project that uses the best practices of today's Enterprise Java -- as in Jakarta EE and MicroProfile.
+Java EE has a long history and there are tons of information with varying quality but not a single, easy, opinionated pointer on how to get started, with best practices being built in.
+That what this project aims for.
+
+
+== Principles
+
+The starter is built around the following principles:
+
+- Creating the basic structures for modern Jakarta EE and MicroProfile projects
+- Leveraging opinionated best practices around tool usage (e.g. thin deployment artifacts, minimal Maven configuration, use of tool conventions)
+- Using reasonable defaults (e.g. defaulting to latest API, Java, or runtime versions)
+- Providing examples for building and running the generated project and optional examples for using Jakarta EE and MicroProfile technologies, e.g. testing, persistence, or configuration
+
+The starter supports the following project mode:
+- Thin WAR, Docker, with all runtime or provided dependencies being installed in a base image layer
+- Standalone JAR, ideally 
+- Supporting Maven, Docker
+
+The starter plans to supports adding the most-prominent project dependencies (e.g. Kafka Client API) and runtime dependencies (e.g. Postgres driver) while providing the optimal setup for these dependencies for the chosen runtime.
+
+The started supports Enterprise Java runtimes that support both Java EE/Jakarta EE and MicroProfile.
+Currently, the plan includes the following:
+- Open Liberty
+- Payara Server
+- Tom EE
+- WildFly

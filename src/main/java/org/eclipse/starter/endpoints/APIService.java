@@ -116,7 +116,7 @@ public class APIService {
         serversToOptionsEtag = new EntityTag(Integer.toHexString(
                 31 * version.getGit().hashCode() + serversToOptions.hashCode() + specsDescriptions.hashCode()));
         try (Scanner s = new Scanner(FilesLocator.class.getClassLoader()
-                .getResourceAsStream("/REST-README.md")).useDelimiter("\\A")) {
+                .getResourceAsStream("/REST-README.adoc")).useDelimiter("\\A")) {
             readme = (s.hasNext() ? s.next() : "") + "\n" + version.getGit() + "\n";
             readmeEtag = new EntityTag(Integer.toHexString(readme.hashCode()));
         } catch (Exception e) {

@@ -55,6 +55,7 @@ public class TemplateModelValues {
     }
 
     private void assignDefaults(JessieModel model, JessieModel templateModel) {
+        // TODO change: set only if empty
 //        model.setRuntime(templateModel.getRuntime());
 //        model.setJavaSEVersion(templateModel.getJavaSEVersion());
 //        model.setMicroProfileVersion(templateModel.getMicroProfileVersion());

@@ -1,11 +1,10 @@
 src/main/resources/files/publicKey.pem.tpl
-src/main/resources/files/readme.md.top.tpl
-src/main/resources/files/pom-maven-plugins.xml.tpl
+src/main/resources/files/HelloIT.java.tpl
 src/main/resources/files/web.xml.tpl
 src/main/resources/files/jwt-roles.properties.tpl
 src/main/resources/files/pom.xml.tpl
+src/main/resources/files/HelloSystem.java.tpl
 src/main/resources/files/Service.java.tpl
-src/main/resources/files/SimpleTest.java.tpl
 src/main/resources/files/liberty/postgres-driver.xml.tpl
 src/main/resources/files/liberty/public.jks.tpl
 src/main/resources/files/liberty/server.xml.tpl
@@ -16,8 +15,7 @@ src/main/resources/files/ServiceController.java.tpl
 src/main/resources/files/beans.xml.tpl
 src/main/resources/files/MPJWTToken.java.tpl
 src/main/resources/files/pom-properties.xml.tpl
-src/main/resources/files/readme.md.tpl
-src/main/resources/files/readme.md.secondary.tpl
+src/main/resources/files/README.adoc.tpl
 src/main/resources/files/ConfigTestController.java.tpl
 src/main/resources/files/ServiceHealthCheck.java.tpl
 src/main/resources/files/TestSecureController.java.tpl
@@ -28,4 +26,5 @@ src/main/resources/files/RestApplication.java.tpl
 src/main/resources/files/HelloController.java.tpl
 src/main/resources/files/securedURLs.ini.tpl
 src/main/resources/files/privateKey.pem.tpl
+src/main/resources/files/SimpleTest.java.tpl
 src/main/resources/files/project-defaults.yml.tpl

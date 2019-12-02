@@ -19,7 +19,6 @@
  */
 package org.eclipse.starter.business.addons.control;
 
-import org.eclipse.starter.business.addons.control.AbstractAddon;
 import org.eclipse.starter.business.model.entity.JakartaRuntime;
 import org.eclipse.starter.business.model.entity.JessieModel;
 

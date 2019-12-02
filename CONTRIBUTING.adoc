@@ -1,0 +1,34 @@
+= Contributing
+
+This project is just starting up.
+Some details on design and aimplementation decisions:
+
+
+== Design choices
+
+- Generated code should be nicely formatted, especially the Maven Pom XML
+- All generated Maven dependencies have to be in _provided_ or _test_ scope
+- Runtime dependencies have to be added in a lower Docker image layer, or a special implementation location, separated from the deployment artifact
+
+
+== WiP examples
+
+In order to build and run the project, issue `mvn clean package liberty:dev`, this will start the project in a development mode.
+
+The website isn't migrated yet, for the time being, use the API.
+
+Examples:
+
+----
+# Liberty with config examples
+curl -v -O -J -L "http://localhost:9080/api/project?supportedServer=LIBERTY&mpVersion=MP30&javaSEVersion=SE12&selectedSpecs=MP_CONFIG"
+
+# Liberty with config and testing examples
+curl -v -O -J -L "http://localhost:9080/api/project?supportedServer=LIBERTY&mpVersion=MP30&javaSEVersion=SE12&selectedSpecs=MP_CONFIG&selectedFeatures=POSTGRES"
+
+# Liberty with config and testing examples, and Postgres driver
+curl -v -O -J -L "http://localhost:9080/api/project?supportedServer=LIBERTY&mpVersion=MP30&javaSEVersion=SE12&selectedSpecs=MP_CONFIG&selectedSpecs=TESTS&selectedFeatures=POSTGRES"
+
+# Liberty with config examples and Kafka Client feature
+curl -v -O -J -L "http://localhost:9080/api/project?supportedServer=LIBERTY&mpVersion=MP30&javaSEVersion=SE12&selectedSpecs=MP_CONFIG&selectedFeatures=KAFKA"
+----

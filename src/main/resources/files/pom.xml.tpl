@@ -39,7 +39,15 @@
 
   <build>
     <finalName>[# th:utext="${maven_artifactid}"/]</finalName>
-[# th:insert="files/pom-maven-plugins.xml.tpl"/]  </build>
+    <plugins>
+[# th:each="plugin : ${maven_plugins}"]
+      <plugin>
+        <groupId>[# th:utext="${plugin.groupId}"/]</groupId>
+        <artifactId>[# th:utext="${plugin.artifactId}"/]</artifactId>
+        <version>[# th:utext="${plugin.version}"/]</version>
+      </plugin>
+[/]    </plugins>
+  </build>
 
   <properties>
 [# th:insert="files/pom-properties.xml.tpl"/]  </properties>

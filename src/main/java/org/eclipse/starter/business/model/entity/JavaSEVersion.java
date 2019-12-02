@@ -27,17 +27,19 @@ package org.eclipse.starter.business.model.entity;
  */
 public enum JavaSEVersion {
 
-    SE7("1.7", "Java 7"),
-    SE8("1.8", "Java 8"),
-    SE11("11", "Java 11"),
-    SE12("12", "Java 12");
+    SE7("1.7", "Java 7", false),
+    SE8("1.8", "Java 8", false),
+    SE11("11", "Java 11", true),
+    SE12("12", "Java 12", true);
 
-    private String code;
-    private String label;
+    private final String code;
+    private final String label;
+    private final boolean jigsaw;
 
-    JavaSEVersion(String code, String label) {
+    JavaSEVersion(String code, String label, boolean jigsaw) {
         this.code = code;
         this.label = label;
+        this.jigsaw = jigsaw;
     }
 
     public String getCode() {
@@ -46,6 +48,10 @@ public enum JavaSEVersion {
 
     public String getLabel() {
         return label;
+    }
+
+    public boolean isJigsaw() {
+        return jigsaw;
     }
 
     public static JavaSEVersion valueFor(String code) {
